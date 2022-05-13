@@ -18,6 +18,9 @@ public class RelationshipController {
     private RelationshipService relationshipService;
 
 
+    // --------------------------------- //
+    // RelCuisineRecipe
+    // --------------------------------- //
     @RequestMapping(value = "/listing/recipe/byCuisine/{cuisineId}", method = RequestMethod.GET)
     public List<Recipe> listAllRecipesByCuisine(@PathVariable(value = "cuisineId") long cuisineId) {
         return relationshipService.retrieveAllRecipesByCuisine(cuisineId);

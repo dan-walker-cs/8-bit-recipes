@@ -27,11 +27,14 @@ public class RelationshipService {
     @Autowired
     private CuisineRepository cuisineRepository;
 
+
+    // --------------------------------- //
+    // RelCuisineRecipe
+    // --------------------------------- //
     public List<Recipe> retrieveAllRecipesByCuisine(long cuisineId) {
         Cuisine target = cuisineRepository.findById(cuisineId)
                 .orElseThrow(() -> new InvalidIdException(cuisineId));
 
-        // TODO: try to break this, then add validation
         return cuisineRecipeRepository.findAllByCompositeKeyCuisine(target)
                 .stream()
                 .map(RelCuisineRecipe::getCompositeKey)
@@ -45,7 +48,6 @@ public class RelationshipService {
         Recipe target = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new InvalidIdException(recipeId));
 
-        // TODO: try to break this, then add validation
         return cuisineRecipeRepository.findAllByCompositeKeyRecipe(target)
                 .stream()
                 .map(RelCuisineRecipe::getCompositeKey)
