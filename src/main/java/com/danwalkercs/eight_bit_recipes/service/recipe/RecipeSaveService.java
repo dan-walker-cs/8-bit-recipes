@@ -3,8 +3,8 @@ package com.danwalkercs.eight_bit_recipes.service.recipe;
 import com.danwalkercs.eight_bit_recipes.entity.data.Recipe;
 import com.danwalkercs.eight_bit_recipes.entity.data.User;
 import com.danwalkercs.eight_bit_recipes.exception.UserNotFoundException;
-import com.danwalkercs.eight_bit_recipes.repository.RecipeRepository;
-import com.danwalkercs.eight_bit_recipes.repository.UserRepository;
+import com.danwalkercs.eight_bit_recipes.repository.data.RecipeRepository;
+import com.danwalkercs.eight_bit_recipes.repository.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.danwalkercs.eight_bit_recipes.service.user;
 
 import com.danwalkercs.eight_bit_recipes.entity.data.User;
-import com.danwalkercs.eight_bit_recipes.repository.UserRepository;
+import com.danwalkercs.eight_bit_recipes.repository.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
