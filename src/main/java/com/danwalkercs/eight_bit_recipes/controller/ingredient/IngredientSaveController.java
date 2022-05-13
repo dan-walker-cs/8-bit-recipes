@@ -1,4 +1,4 @@
-package com.danwalkercs.eight_bit_recipes.controller;
+package com.danwalkercs.eight_bit_recipes.controller.ingredient;
 
 
 import com.danwalkercs.eight_bit_recipes.entity.data.Ingredient;

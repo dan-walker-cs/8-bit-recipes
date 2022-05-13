@@ -1,4 +1,4 @@
-package com.danwalkercs.eight_bit_recipes.controller;
+package com.danwalkercs.eight_bit_recipes.controller.ingredient;
 
 import com.danwalkercs.eight_bit_recipes.entity.data.Ingredient;
 import com.danwalkercs.eight_bit_recipes.service.ingredient.IngredientListingService;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/ingredient/listing")
