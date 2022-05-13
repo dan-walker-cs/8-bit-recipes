@@ -1,4 +1,4 @@
-package com.danwalkercs._bit_recipes;
+package com.danwalkercs.eight_bit_recipes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

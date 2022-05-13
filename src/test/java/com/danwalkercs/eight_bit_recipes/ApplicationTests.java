@@ -1,4 +1,4 @@
-package com.danwalkercs._bit_recipes;
+package com.danwalkercs.eight_bit_recipes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
