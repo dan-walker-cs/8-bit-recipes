@@ -44,4 +44,17 @@ public class RelationshipController {
     public List<Cuisine> listAllCuisinesByIngredient(@PathVariable(value = "ingredientId") long ingredientId) {
         return relationshipService.retrieveAllCuisinesByIngredient(ingredientId);
     }
+
+    // --------------------------------- //
+    // RelIngredientRecipe
+    // --------------------------------- //
+    @RequestMapping(value = "/listing/ingredient/byRecipe/{recipeId}", method = RequestMethod.GET)
+    public List<Ingredient> listAllIngredientsByRecipe(@PathVariable(value = "recipeId") long recipeId) {
+        return relationshipService.retrieveAllIngredientsByRecipe(recipeId);
+    }
+
+    @RequestMapping(value = "/listing/recipe/byIngredient/{ingredientId}", method = RequestMethod.GET)
+    public List<Recipe> listAllRecipesByIngredient(@PathVariable(value = "ingredientId") long ingredientId) {
+        return relationshipService.retrieveAllRecipesByIngredient(ingredientId);
+    }
 }

@@ -3,16 +3,14 @@ package com.danwalkercs.eight_bit_recipes.service;
 import com.danwalkercs.eight_bit_recipes.entity.data.Cuisine;
 import com.danwalkercs.eight_bit_recipes.entity.data.Ingredient;
 import com.danwalkercs.eight_bit_recipes.entity.data.Recipe;
-import com.danwalkercs.eight_bit_recipes.entity.rel.RelCuisineRecipe;
-import com.danwalkercs.eight_bit_recipes.entity.rel.RelCuisineRecipeKey;
-import com.danwalkercs.eight_bit_recipes.entity.rel.RelIngredientCuisine;
-import com.danwalkercs.eight_bit_recipes.entity.rel.RelIngredientCuisineKey;
+import com.danwalkercs.eight_bit_recipes.entity.rel.*;
 import com.danwalkercs.eight_bit_recipes.exception.InvalidIdException;
 import com.danwalkercs.eight_bit_recipes.repository.data.CuisineRepository;
 import com.danwalkercs.eight_bit_recipes.repository.data.IngredientRepository;
 import com.danwalkercs.eight_bit_recipes.repository.data.RecipeRepository;
 import com.danwalkercs.eight_bit_recipes.repository.rel.RelCuisineRecipeRepository;
 import com.danwalkercs.eight_bit_recipes.repository.rel.RelIngredientCuisineRepository;
+import com.danwalkercs.eight_bit_recipes.repository.rel.RelIngredientRecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +26,9 @@ public class RelationshipService {
 
     @Autowired
     private RelIngredientCuisineRepository ingredientCuisineRepository;
+
+    @Autowired
+    private RelIngredientRecipeRepository ingredientRecipeRepository;
 
     @Autowired
     private RecipeRepository recipeRepository;
@@ -94,6 +95,35 @@ public class RelationshipService {
                 .map(RelIngredientCuisineKey::getCuisine)
                 .map(Cuisine::getId)
                 .map(cId -> cuisineRepository.getById(cId))
+                .collect(Collectors.toList());
+    }
+
+    // --------------------------------- //
+    // RelIngredientRecipe
+    // --------------------------------- //
+    public List<Ingredient> retrieveAllIngredientsByRecipe(long recipeId) {
+        Recipe target = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new InvalidIdException(recipeId));
+
+        return ingredientRecipeRepository.findAllByCompositeKeyRecipe(target)
+                .stream()
+                .map(RelIngredientRecipe::getCompositeKey)
+                .map(RelIngredientRecipeKey::getIngredient)
+                .map(Ingredient::getId)
+                .map(iId -> ingredientRepository.getById(iId))
+                .collect(Collectors.toList());
+    }
+
+    public List<Recipe> retrieveAllRecipesByIngredient(long ingredientId) {
+        Ingredient target = ingredientRepository.findById(ingredientId)
+                .orElseThrow(() -> new InvalidIdException(ingredientId));
+
+        return ingredientRecipeRepository.findAllByCompositeKeyIngredient(target)
+                .stream()
+                .map(RelIngredientRecipe::getCompositeKey)
+                .map(RelIngredientRecipeKey::getRecipe)
+                .map(Recipe::getId)
+                .map(rId -> recipeRepository.getById(rId))
                 .collect(Collectors.toList());
     }
 }
