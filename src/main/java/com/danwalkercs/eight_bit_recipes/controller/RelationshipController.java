@@ -69,5 +69,11 @@ public class RelationshipController {
         return relationshipService.retrieveAllIngredientsByUser(userId);
     }
 
-
+    // --------------------------------- //
+    // RelUserRecipe
+    // --------------------------------- //
+    @RequestMapping(value = "/listing/recipe/byUser/{userId}", method = RequestMethod.GET)
+    public List<Recipe> listAllRecipesByUser(@PathVariable(value = "userId") long userId) {
+        return relationshipService.retrieveAllRecipesByUser(userId);
+    }
 }

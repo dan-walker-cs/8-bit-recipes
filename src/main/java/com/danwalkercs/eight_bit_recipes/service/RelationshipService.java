@@ -10,10 +10,7 @@ import com.danwalkercs.eight_bit_recipes.repository.data.CuisineRepository;
 import com.danwalkercs.eight_bit_recipes.repository.data.IngredientRepository;
 import com.danwalkercs.eight_bit_recipes.repository.data.RecipeRepository;
 import com.danwalkercs.eight_bit_recipes.repository.data.UserRepository;
-import com.danwalkercs.eight_bit_recipes.repository.rel.RelCuisineRecipeRepository;
-import com.danwalkercs.eight_bit_recipes.repository.rel.RelIngredientCuisineRepository;
-import com.danwalkercs.eight_bit_recipes.repository.rel.RelIngredientRecipeRepository;
-import com.danwalkercs.eight_bit_recipes.repository.rel.RelUserIngredientRepository;
+import com.danwalkercs.eight_bit_recipes.repository.rel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +32,9 @@ public class RelationshipService {
 
     @Autowired
     private RelUserIngredientRepository userIngredientRepository;
+
+    @Autowired
+    private RelUserRecipeRepository userRecipeRepository;
 
     @Autowired
     private RecipeRepository recipeRepository;
@@ -149,6 +149,22 @@ public class RelationshipService {
                 .map(RelUserIngredientKey::getIngredient)
                 .map(Ingredient::getId)
                 .map(iId -> ingredientRepository.getById(iId))
+                .collect(Collectors.toList());
+    }
+
+    // --------------------------------- //
+    // RelUserRecipe
+    // --------------------------------- //
+    public List<Recipe> retrieveAllRecipesByUser(long userId) {
+        User target = userRepository.findById(userId)
+                .orElseThrow(() -> new InvalidIdException(userId));
+
+        return userRecipeRepository.findAllByCompositeKeyUser(target)
+                .stream()
+                .map(RelUserRecipe::getCompositeKey)
+                .map(RelUserRecipeKey::getRecipe)
+                .map(Recipe::getId)
+                .map(rId -> recipeRepository.getById(rId))
                 .collect(Collectors.toList());
     }
 }
