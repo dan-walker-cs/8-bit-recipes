@@ -60,4 +60,14 @@ public class RelationshipController {
     public List<Recipe> listAllRecipesByIngredient(@PathVariable(value = "ingredientId") long ingredientId) {
         return relationshipService.retrieveAllRecipesByIngredient(ingredientId);
     }
+
+    // --------------------------------- //
+    // RelUserIngredient
+    // --------------------------------- //
+    @RequestMapping(value = "/listing/ingredient/byUser/{userId}", method = RequestMethod.GET)
+    public List<Ingredient> listAllIngredientsByUser(@PathVariable(value = "userId") long userId) {
+        return relationshipService.retrieveAllIngredientsByUser(userId);
+    }
+
+
 }

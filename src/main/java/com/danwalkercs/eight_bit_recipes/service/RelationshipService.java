@@ -3,14 +3,17 @@ package com.danwalkercs.eight_bit_recipes.service;
 import com.danwalkercs.eight_bit_recipes.entity.data.Cuisine;
 import com.danwalkercs.eight_bit_recipes.entity.data.Ingredient;
 import com.danwalkercs.eight_bit_recipes.entity.data.Recipe;
+import com.danwalkercs.eight_bit_recipes.entity.data.User;
 import com.danwalkercs.eight_bit_recipes.entity.rel.*;
 import com.danwalkercs.eight_bit_recipes.exception.InvalidIdException;
 import com.danwalkercs.eight_bit_recipes.repository.data.CuisineRepository;
 import com.danwalkercs.eight_bit_recipes.repository.data.IngredientRepository;
 import com.danwalkercs.eight_bit_recipes.repository.data.RecipeRepository;
+import com.danwalkercs.eight_bit_recipes.repository.data.UserRepository;
 import com.danwalkercs.eight_bit_recipes.repository.rel.RelCuisineRecipeRepository;
 import com.danwalkercs.eight_bit_recipes.repository.rel.RelIngredientCuisineRepository;
 import com.danwalkercs.eight_bit_recipes.repository.rel.RelIngredientRecipeRepository;
+import com.danwalkercs.eight_bit_recipes.repository.rel.RelUserIngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +34,9 @@ public class RelationshipService {
     private RelIngredientRecipeRepository ingredientRecipeRepository;
 
     @Autowired
+    private RelUserIngredientRepository userIngredientRepository;
+
+    @Autowired
     private RecipeRepository recipeRepository;
 
     @Autowired
@@ -38,6 +44,9 @@ public class RelationshipService {
 
     @Autowired
     private IngredientRepository ingredientRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     // --------------------------------- //
@@ -124,6 +133,22 @@ public class RelationshipService {
                 .map(RelIngredientRecipeKey::getRecipe)
                 .map(Recipe::getId)
                 .map(rId -> recipeRepository.getById(rId))
+                .collect(Collectors.toList());
+    }
+
+    // --------------------------------- //
+    // RelUserIngredient
+    // --------------------------------- //
+    public List<Ingredient> retrieveAllIngredientsByUser(long userId) {
+        User target = userRepository.findById(userId)
+                .orElseThrow(() -> new InvalidIdException(userId));
+
+        return userIngredientRepository.findAllByCompositeKeyUser(target)
+                .stream()
+                .map(RelUserIngredient::getCompositeKey)
+                .map(RelUserIngredientKey::getIngredient)
+                .map(Ingredient::getId)
+                .map(iId -> ingredientRepository.getById(iId))
                 .collect(Collectors.toList());
     }
 }
