@@ -30,7 +30,6 @@ public class RecipeSaveService {
         return recipeRepository.save(recipe);
     }
 
-    // TODO: Does this belong in here, or a common utility?
     private User validateUserName(String name) {
         return Optional.ofNullable(userRepository.findByName(name))
                     .orElseThrow(() -> new UserNotFoundException("No user exists by username: " + name));
